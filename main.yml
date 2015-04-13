@@ -1,0 +1,25 @@
+---
+- hosts: minecraft
+  vars:
+    server_url: "https://s3.amazonaws.com/Minecraft.Download/versions/1.8.3/minecraft_server.1.8.3.jar"
+    ebs_device: "/dev/xvdf"
+    ebs_fstype: "ext4"
+    ebs_mount_point: "/mnt/server"
+    server_install_path: "{{ ebs_mount_point }}/minecraft"
+    server_install_filename: "minecraft_server.1.8.3.jar"
+  sudo: yes
+  tasks:
+    - name: Format EBS volume
+      filesystem: dev="{{ ebs_device }}" fstype={{ ebs_fstype }}
+
+    - name: Mount ebs volume
+      mount: fstype={{ ebs_fstype }} name="{{ ebs_mount_point }}" src="{{ ebs_device }}" state=mounted
+
+    - name: Install JRE 7
+      apt: name=openjdk-7-jre state=installed update_cache=true
+
+    - name: Create server install directory
+      file: path="{{ server_install_path }}" state=directory
+
+    - name: Download Minecraft server
+      get_url: dest="{{ server_install_path }}/{{ server_install_filename }}" url="{{ server_url }}"
