@@ -23,3 +23,8 @@
 
     - name: Download Minecraft server
       get_url: dest="{{ server_install_path }}/{{ server_install_filename }}" url="{{ server_url }}"
+
+    - name: Install configuration files
+      copy: src="files/" dest="{{ server_install_path }}"
+
+
