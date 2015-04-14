@@ -6,7 +6,8 @@
     ebs_fstype: "ext4"
     ebs_mount_point: "/mnt/server"
     server_install_path: "{{ ebs_mount_point }}/minecraft"
-    server_install_filename: "minecraft_server.1.8.3.jar"
+    server_install_filename: "minecraft_server.jar"
+    init_script: "/etc/init.d/minecraft"
   sudo: yes
   tasks:
     - name: Format EBS volume
@@ -25,6 +26,17 @@
       get_url: dest="{{ server_install_path }}/{{ server_install_filename }}" url="{{ server_url }}"
 
     - name: Install configuration files
-      copy: src="files/" dest="{{ server_install_path }}"
+      copy: src="files/config/" dest="{{ server_install_path }}"
 
+    - name: Install start script
+      copy: src="files/scripts" dest="{{ server_install_path }}" mode=0755
 
+    - name: Install init script
+      copy: src="files/init.d/minecraft" dest="{{ init_script }}" mode=0755
+
+    - name: Set minecraft service to start on boot
+      service: name=minecraft enabled=yes
+
+    - name: Start minecraft service
+      service: name=minecraft state=started
+      

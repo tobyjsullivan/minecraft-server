@@ -1,0 +1,13 @@
+#!/bin/bash
+
+APP_DIR="/mnt/server/minecraft"
+JAR_FILE="${APP_DIR}/minecraft_server.jar"
+JAVA_ARGS="-Xms1G -Xmx1G"
+APP_ARGS="nogui"
+
+# ***********************************************
+# ***********************************************
+
+pushd $APP_DIR
+exec java $JAVA_ARGS -jar $JAR_FILE $APP_ARGS
+popd
