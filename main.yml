@@ -2,7 +2,7 @@
 - hosts: minecraft
   vars:
     server_url: "https://s3.amazonaws.com/Minecraft.Download/versions/1.8.3/minecraft_server.1.8.3.jar"
-    ebs_device: "/dev/xvdf"
+    ebs_device: "/dev/xvdb"
     ebs_fstype: "ext4"
     ebs_mount_point: "/mnt/server"
     server_install_path: "{{ ebs_mount_point }}/minecraft"
@@ -33,6 +33,9 @@
 
     - name: Install init script
       copy: src="files/init.d/minecraft" dest="{{ init_script }}" mode=0755
+
+    - name: Stop minecraft service
+      service: name=minecraft state=stopped
 
     - name: Set minecraft service to start on boot
       service: name=minecraft enabled=yes
