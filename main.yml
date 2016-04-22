@@ -1,7 +1,7 @@
 ---
 - hosts: minecraft
   vars:
-    server_url: "https://s3.amazonaws.com/Minecraft.Download/versions/1.8.3/minecraft_server.1.8.3.jar"
+    server_url: "https://s3.amazonaws.com/Minecraft.Download/versions/1.9.2/minecraft_server.1.9.2.jar"
     ebs_device: "/dev/xvdb"
     ebs_fstype: "ext4"
     ebs_mount_point: "/mnt/server"
