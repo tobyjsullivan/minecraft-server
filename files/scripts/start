@@ -2,7 +2,7 @@
 
 APP_DIR="/mnt/server/minecraft"
 JAR_FILE="${APP_DIR}/minecraft_server.jar"
-JAVA_ARGS="-Xms1G -Xmx1G"
+JAVA_ARGS="-Xms1536m -Xmx1536m"
 APP_ARGS="nogui"
 
 # ***********************************************
